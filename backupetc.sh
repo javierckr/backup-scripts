@@ -2,6 +2,15 @@
 #
 # Backup /etc directory on openwrt router
 
+# Constants
+ROOT_UID=0
+E_NOTROOT=87
+# Check root privileges
+if [ "$UID" -ne "$ROOT_UID" ]
+then
+    echo "Must be root to run this script."
+    exit $E_NOTROOT
+fi
 # Set variables
 # Set passphrase
 PASSPHRASE=yourpassphrase
@@ -18,4 +27,9 @@ USER=ftpuser
 BACKUPDEST=/home/ftpuser/backup/$(hostname)/etc/
 
 # Create backup
-tar -zcvf $BACKUPDIR | gpg -c --batch --passphrase $PASSPHRASE | ssh -i /root/.ssh/id_rsa $USER@$HOST "cat > $BACKUPDEST$BACKUPFILE" && logger -t backupetc "Backup of /etc directory completed successfully" || logger -t backupetc "Backup of /etc directory failed" 2>&1 | tee -a /var/log/backupetc.log
+tar -zcvf $BACKUPDIR |\
+    gpg -c --batch --passphrase $PASSPHRASE |\
+    ssh -i /root/.ssh/id_rsa $USER@$HOST "cat > $BACKUPDEST$BACKUPFILE" &&\
+    logger -t backupetc "Backup of /etc directory completed successfully" ||\
+    logger -t backupetc "Backup of /etc directory failed" 2>&1 |\
+    tee -a /var/log/backupetc.log
