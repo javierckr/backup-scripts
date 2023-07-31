@@ -11,7 +11,7 @@ BACKUPDIR=/etc/
 BACKUPFILE=backupetc$(date +%Y%m%d)$(hostname).tar.gz.gpg
 # Set backup destination
 # This is the remote server where the backup file will be copied
-HOST=friendlywrt.lan
+HOST=hostname
 # This is the user on the remote server where the backup file will be copied
 USER=ftpuser
 # This is the directory on the remote server where the backup file will be copied
