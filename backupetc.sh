@@ -12,7 +12,7 @@ then
     exit $E_NOTROOT
 fi
 # Set variables
-# Set passphrase
+# Set passphrase, this should be different for each host
 PASSPHRASE=yourpassphrase
 # Set backup directory
 BACKUPDIR=/etc/
@@ -24,7 +24,7 @@ HOST=hostname
 # This is the user on the remote server where the backup file will be copied
 USER=ftpuser
 # This is the directory on the remote server where the backup file will be copied
-BACKUPDEST=/home/ftpuser/backup/$(hostname)/etc/
+BACKUPDEST=/home/ftpuser/backups/$(hostname)/etc/
 
 # Create backup
 tar -zcvf $BACKUPDIR |\
