@@ -27,7 +27,7 @@ USER=ftpuser
 BACKUPDEST=/media/netdrive/ftp/backups/$(hostname)/etc/
 
 # Create backup
-tar -zcvf $BACKUPDIR |\
+tar -zcvf - $BACKUPDIR |\
     gpg -c --batch --passphrase "$PASSPHRASE" |\
     ssh -i /root/.ssh/id_rsa $USER@$HOST "cat > $BACKUPDEST$BACKUPFILE" &&\
     logger -t backupetc "Backup of /etc directory completed successfully" ||\
