@@ -24,11 +24,11 @@ HOST=hostname
 # This is the user on the remote server where the backup file will be copied
 USER=ftpuser
 # This is the directory on the remote server where the backup file will be copied
-BACKUPDEST=/home/ftpuser/backups/$(hostname)/etc/
+BACKUPDEST=/media/netdrive/ftp/backups/$(hostname)/etc/
 
 # Create backup
 tar -zcvf $BACKUPDIR |\
-    gpg -c --batch --passphrase $PASSPHRASE |\
+    gpg -c --batch --passphrase "$PASSPHRASE" |\
     ssh -i /root/.ssh/id_rsa $USER@$HOST "cat > $BACKUPDEST$BACKUPFILE" &&\
     logger -t backupetc "Backup of /etc directory completed successfully" ||\
     logger -t backupetc "Backup of /etc directory failed" 2>&1 |\
